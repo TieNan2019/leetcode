@@ -25,6 +25,7 @@ public:
                 && root->val < q->val)
                         return traverse(root->right, p, q);
 
+                // 如果不再同一个分支, 则返回当前节点
                 return root;
         }
 
