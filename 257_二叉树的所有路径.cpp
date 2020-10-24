@@ -14,13 +14,16 @@ public:
                 if (root == NULL)
                         return {};
 
+                /* 此题很关键的一点, 一定要到达叶子结点 */
                 if (root->left == NULL && root->right == NULL)
                         return {{root->val}};
 
+                /* 遍历路径 */
                 vector<vector<int>> left = getPath(root->left);
                 vector<vector<int>> right = getPath(root->right);
 
 
+                /* 将路径汇总后返回 */
                 vector<vector<int>> res;
 
                 for (vector<int> v : left) {
@@ -39,6 +42,7 @@ public:
                 auto seq = getPath(root);
                 vector<string> res;
 
+                /* 批量转换成字符串 ---- 直接在递归里转换代码是在太丑了😭 */
                 for (auto v : seq) {
                         if (!v.empty()) {
                                 string s = to_string(v[0]);
