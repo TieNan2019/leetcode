@@ -22,6 +22,7 @@ public:
                 leftDepth = depthDetect(root->left);
                 rightDepth = depthDetect(root->right);
 
+                /* 返回的是子树的层数, 将 -1 作为树不平衡的标志, 软件短路 */
                 if (leftDepth == -1)
                         return -1;
                 if (rightDepth == -1)
