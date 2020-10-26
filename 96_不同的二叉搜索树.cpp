@@ -15,6 +15,7 @@ public:
                         int rightSize = n - i - 1;
                         // cout << leftSize << " " << rightSize << endl;
 
+                        /* 当根点确定,树的可能构成的个数为 左子树的所有可能性 x 右子树的所有可能性 */
                         sum += numTrees(leftSize) * numTrees(rightSize);
                 }
 
