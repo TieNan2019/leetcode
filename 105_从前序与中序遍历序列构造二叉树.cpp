@@ -4,45 +4,62 @@
  *     int val;
  *     TreeNode *left;
  *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-
 class Solution {
 public:
-        int depthDetect(TreeNode * root)
+        TreeNode *recursion(const vector<int> &preorder, 
+        const vector<int> &inorder)
         {
-                if (root == nullptr)
-                        return 0;
+                if (preorder.empty())
+                        return nullptr;
 
-                int leftDepth = 0, rightDepth = 0;
+                int rootVal = preorder.front();
+                TreeNode *root = new TreeNode(rootVal);
 
-                leftDepth = depthDetect(root->left);
-                rightDepth = depthDetect(root->right);
+                if (preorder.size() == 1)
+                        return root;
 
-                /* 返回的是子树的层数, 将 -1 作为树不平衡的标志, 软件短路 */
-                if (leftDepth == -1)
-                        return -1;
-                if (rightDepth == -1)
-                        return -1;
+                auto it = find(inorder.begin(), inorder.end(), rootVal);
+                vector<int> inLeft(inorder.begin(), it), inRight(it+1, inorder.end());
 
-                // cout << "val : " << root->val << " left : "
-                // << leftDepth << " right: " << rightDepth << endl;
+                /*
+                map<int, bool> isRight;
+                
+                for (int i = 0; i < inRight.size(); i++)
+                        isRight[inRight[i]] = true;
+                
+                auto iter = preorder.begin();
+                for (iter = preorder.begin(); iter != preorder.end(); iter++) {
+                        if (isRight[*iter])
+                                break;
+                }
+                vector<int> preLeft(preorder.begin()+1, iter), preRight(iter, preorder.end());
+                */
+                // cout << inLeft.size() << endl;
 
-                if (abs(leftDepth - rightDepth) > 1)
-                        return -1;
+                vector<int> preLeft(preorder.begin()+1, preorder.begin()+inLeft.size()+1);
+                vector<int> preRight(preorder.begin()+inLeft.size()+1, preorder.end());
+                
+                root->left = recursion(preLeft, inLeft);
+                root->right = recursion(preRight, inRight);
+                
+                /*
+                for (auto x : inLeft) cout << x << " "; cout << endl;
+                for (auto x : inRight) cout << x << " "; cout << endl;
+                for (auto x : preLeft) cout << x << " "; cout << endl;
+                for (auto x : preRight) cout << x << " "; cout << endl;
+                */
 
-                return leftDepth > rightDepth ?
-                leftDepth + 1 : rightDepth + 1;
+                return root;
         }
 
 
-        bool isBalanced(TreeNode* root) {
-                if (depthDetect(root) == -1)
-                        return false;
- 
-                return true;
+        TreeNode *buildTree(vector<int>& preorder, vector<int>& inorder)
+        {
+                TreeNode *root = recursion(preorder, inorder);
+
+                return root;
         }
 };
