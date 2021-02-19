@@ -1,11 +1,8 @@
 class Solution {
 public:
         bool canJump(vector<int>& nums) {
-                /* 数组末尾的值并不重要, 到那时会影响到逻辑的判断 */
-                nums.back() = 1;
-
                 /* 游戏规则可知, 如果无法避免进入 0 是唯一失败的可能 */
-                for (int i = nums.size() - 1; i >= 0; i--) {
+                for (int i = nums.size() - 2; i >= 0; i--) {
                         /* 所以主要任务就是向前逆向找 0 */
                         if (nums[i] > 0)
                                 continue;
