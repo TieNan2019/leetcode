@@ -47,14 +47,11 @@ public:
                                 /* 后序遍历发生在此处 */
                                 ans.push_back(s.top()->val);
 
-                                if (cnt + 1 >= s.top()->children.size()) {
-                                        s.pop();
 
-                                        cnt = sidx.top() + 1;
-                                        sidx.pop();
-                                }
-                                else
-                                        cnt++;
+                                s.pop();
+
+                                cnt = sidx.top() + 1;
+                                sidx.pop();
                         }
                 }
 
