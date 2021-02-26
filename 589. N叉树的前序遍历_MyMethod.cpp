@@ -50,14 +50,10 @@ public:
                                 cnt = 0;
                         }
                         else {
-                                if (cnt + 1 >= s.top()->children.size()) {
-                                        s.pop();
+                                s.pop();
 
-                                        cnt = sidx.top() + 1;
-                                        sidx.pop();
-                                }
-                                else
-                                        cnt++;
+                                cnt = sidx.top() + 1;
+                                sidx.pop();
                         }
                 }
 
